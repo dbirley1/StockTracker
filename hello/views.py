@@ -3,6 +3,8 @@ from django.utils.timezone import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
 
+
+
 # Replace the existing home function with the one below
 def home(request):
     return render(request, "hello/home.html")
