@@ -9,7 +9,9 @@ import yfinance as yf
 import datetime as dt 
 import plotly.graph_objs as go 
 
-# Override Yahoo Finance 
+
+#def process_symbol(stock):
+    # Override Yahoo Finance 
 yf.pdr_override()
 
 # Create input field for our desired stock 

@@ -6,16 +6,20 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'hello/site.css' %}"/>
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body> 
 <div class="navbar">
     <div class="logo-image">
-        <img src="{% static "hello/quicktrends.jpg" %}" alt="LOGO"/>
+        <img src="{% static "hello/quicktrends.jpg" %}" alt="LOGO" height=150 width=150/>
     </div>
-    <a href="{% url 'home' %}" class="navbar-brand">Home</a>
-    <a href="{% url 'about' %}" class="navbar-item">About</a>
-    <a href="{% url 'contact' %}" class="navbar-item">Contact</a>
+    <form action="" method="GET">
+        <label for="ticker">Ticker: </label>
+        <input id="ticker" type="text" name="ticker">
+        <input type="submit" value="Submit">
+    </form>
 </div>
 
 <div class="body-content">

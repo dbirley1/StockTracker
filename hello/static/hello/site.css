@@ -27,15 +27,15 @@
     padding: 5px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.logo{
-    width: auto;
- }
     
  .logo-image{
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    overflow: visible;
-    margin-top: -6px;
-}
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0px;
+  width: 150px;
+  height: 150px;
+ }right
+
+ .search-bar{
+    float: right
+ }
