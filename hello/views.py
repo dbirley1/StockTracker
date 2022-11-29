@@ -7,6 +7,7 @@ from .forms import StockForm
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import re
+from . import stockAlg
 
 # Raw Package
 import numpy as np
@@ -29,6 +30,8 @@ def createChart(ticker):
     stock_info = yf.Ticker(ticker).info
     currentTickerPrice = stock_info['regularMarketPrice']
     shortName = stock_info['shortName']
+    print (str(stock_info))
+    
 
     # Declare plotly figure (go)
     fig=go.Figure()
@@ -42,7 +45,10 @@ def createChart(ticker):
                     close=df['Close'], name = 'market data'))
 
     fig.update_layout(
-        title= shortName +' Live Share Price: ' +  "(" + ticker + ") " + str(currentTickerPrice))              
+        title= shortName + "(" + ticker + ") " +' Live Share Price: ' +  str(currentTickerPrice))              
+
+    fig.update
+
 
     fig.update_xaxes(
         rangeslider_visible=True,
@@ -74,23 +80,11 @@ def stock(request):
             if (x):
                 plot_div = re.sub("\('", "", str(plot_div), 1)
                 plot_div = re.sub("',\)", "", str(plot_div))
-
-            
         
-
-
+    
     return render(request, 'hello/stock.html', context={'plot_div': plot_div})
 
-def contact(request):
+def login(request):
     
-    return render(request, "hello/contact.html")
+    return render(request, "hello/login.html")
 
-def hello_there(request, name):
-    return render(
-        request,
-        'hello/hello_there.html',
-        {
-            'name': name,
-            'date': datetime.now()
-        }
-    )

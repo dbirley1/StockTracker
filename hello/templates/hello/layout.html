@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'hello/site.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
         <input type="submit"  value="Submit">
     </form>
     </a>
-    <a><button style="color:red;" type="button">Login</button></a>
+    <a href="login/" style="color:yellow; float: right;" type="button" class="btn btn-primary">Login</a>
 </navbar>
    
 
