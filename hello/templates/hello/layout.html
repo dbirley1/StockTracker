@@ -11,16 +11,17 @@
 </head>
 
 <body> 
-<div class="navbar">
-    <div class="logo-image">
-        <img src="{% static "hello/quicktrends.jpg" %}" alt="LOGO" height=150 width=150/>
-    </div>
-    <form action="" method="GET">
+<navbar>
+    <a><img src="{% static "hello/quicktrends.jpg" %}" alt="LOGO" height=175  width=175/></a>
+    <a><form style="display:inline;" action="" method="GET">
         <label for="ticker">Ticker: </label>
-        <input id="ticker" type="text" name="ticker">
-        <input type="submit" value="Submit">
+        <input id="ticker" type="text" placeholder= "Search..." name="ticker">
+        <input type="submit"  value="Submit">
     </form>
-</div>
+    </a>
+    <a><button style="color:red;" type="button">Login</button></a>
+</navbar>
+   
 
 <div class="body-content">
     {% block content %}

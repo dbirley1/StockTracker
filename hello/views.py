@@ -6,6 +6,7 @@ from django.shortcuts import render
 from .forms import StockForm
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+import re
 
 # Raw Package
 import numpy as np
@@ -25,10 +26,14 @@ def createChart(ticker):
     # Retrieve stock data frame (df) from yfinance API at an interval of 1m 
     df = yf.download(tickers=ticker,period='1d',interval='1m')
 
-    print(df)
+    stock_info = yf.Ticker(ticker).info
+    currentTickerPrice = stock_info['regularMarketPrice']
+    shortName = stock_info['shortName']
 
     # Declare plotly figure (go)
     fig=go.Figure()
+
+    
 
     fig.add_trace(go.Candlestick(x=df.index,
                     open=df['Open'],
@@ -37,7 +42,7 @@ def createChart(ticker):
                     close=df['Close'], name = 'market data'))
 
     fig.update_layout(
-        title= ticker+' Live Share Price:',)               
+        title= shortName +' Live Share Price: ' +  "(" + ticker + ") " + str(currentTickerPrice))              
 
     fig.update_xaxes(
         rangeslider_visible=True,
@@ -45,7 +50,6 @@ def createChart(ticker):
             buttons=list([
                 dict(count=15, label="15m", step="minute", stepmode="backward"),
                 dict(count=45, label="45m", step="minute", stepmode="backward"),
-                dict(count=1, label="HTD", step="hour", stepmode="todate"),
                 dict(count=3, label="3h", step="hour", stepmode="backward"),
                 dict(step="all")
             ])
@@ -53,7 +57,7 @@ def createChart(ticker):
     )
     return plot(fig, output_type='div', include_plotlyjs=False)
 
-plot_div = createChart('AMZN')
+plot_div = createChart('^DJI')
 
 
 def home(request):
@@ -63,8 +67,17 @@ def stock(request):
     
     if request.GET.__contains__('ticker'):
         ticker=request.GET.__getitem__('ticker')
-        global plot_div
-        plot_div = createChart(ticker),
+        if ticker != '':
+            global plot_div
+            plot_div = createChart(ticker),
+            x = re.search("^\('.+',\)$", str(plot_div)),
+            if (x):
+                plot_div = re.sub("\('", "", str(plot_div), 1)
+                plot_div = re.sub("',\)", "", str(plot_div))
+
+            
+        
+
 
     return render(request, 'hello/stock.html', context={'plot_div': plot_div})
 

@@ -1,41 +1,17 @@
 .navbar {
-    background-color: rgb(189, 155, 179);
+    background-color: #e0e0e0;
     font-size: 1em;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
-    padding: 8px 5px 8px 5px;
-    top: 0;
-
+    list-style-type: none;
+    margin: 0;
+    padding: 0
 }
 
-.navbar a {
-    text-decoration: none;
-    color: inherit;
+.navbar a{
+    display: inline;
 }
-
-.navbar-brand {
-    font-size: 1.2em;
-    font-weight: 600;
-}
-
-.navbar-item {
-    font-variant: small-caps;
-    margin-left: 30px;
-}
-
-.body-content {
-    padding: 5px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-    
- .logo-image{
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 0px;
-  width: 150px;
-  height: 150px;
- }right
-
- .search-bar{
-    float: right
- }
+/* .search-bar{
+    float: right;
+    margin-left: 10px
+ } */
