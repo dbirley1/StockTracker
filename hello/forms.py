@@ -1,4 +1,5 @@
 from django import forms
 
-class StockForm(forms.Form):
-    ticker = forms.CharField(label='Ticker', max_length=4)
+class loginForm(forms.Form):
+    username = forms.CharField(label='Username', max_length=20)
+    password = forms.CharField(label='Password', max_length=30)

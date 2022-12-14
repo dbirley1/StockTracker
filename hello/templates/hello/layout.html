@@ -4,30 +4,46 @@
     <meta charset="utf-8"/>
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 </head>
 
-<body> 
-<navbar>
-    <a><img src="{% static "hello/quicktrends.jpg" %}" alt="LOGO" height=175  width=175/></a>
-    <a><form style="display:inline;" action="" method="GET">
+
+<body style="background-color: #f8f9fa;"> 
+<nav class="navbar bg-light">
+        <a class = "navbar-brand" href="http://127.0.0.1:8000/">
+            <img src="{% static "hello/quicktrendsSML2.png" %}" alt="LOGO" height=50 width=50 class='d-inline-block'/>QuickTrends
+        </a>
+        <a><form style="display:inline;" action="" method="GET">
         <label for="ticker">Ticker: </label>
         <input id="ticker" type="text" placeholder= "Search..." name="ticker">
-        <input type="submit"  value="Submit">
+        <input class="btn btn-primary" type="submit"  value="Submit"> 
+        </a>
     </form>
-    </a>
-    <a href="login/" style="color:yellow; float: right;" type="button" class="btn btn-primary">Login</a>
-</navbar>
-   
+    {% if user.is_authenticated %}
+    <p>Hello {{ username }} </p>
+    <a href="/logout" class="btn btn-primary">Log Out</a>
+    {% else %}
+    <a href="/login" class="btn btn-primary">Login</a>
+    {% endif %}
+</nav>
+
+
+
+
+
 
 <div class="body-content">
-    {% block content %}
-    {% endblock %}
-    <hr/>
-  
+    <div style="background-color: #bbc4f0">
+        {% block content %}
+        {% endblock %}
+    </div>
 </div>
+
+
+<script src="" async defer></script>
 </body>
 </html>

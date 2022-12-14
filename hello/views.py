@@ -2,12 +2,18 @@ import re
 from django.utils.timezone import datetime
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
-from .forms import StockForm
+from .forms import loginForm
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import re
 from . import stockAlg
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import make_password
+from django.contrib import messages
+from django.shortcuts import redirect, render
 
 # Raw Package
 import numpy as np
@@ -20,6 +26,9 @@ import yfinance as yf
 import datetime as dt 
 import plotly.graph_objs as go 
 
+loginBool = False
+globalUsername = ''
+
 
 def createChart(ticker):
     yf.pdr_override()
@@ -29,8 +38,11 @@ def createChart(ticker):
 
     stock_info = yf.Ticker(ticker).info
     currentTickerPrice = stock_info['regularMarketPrice']
-    shortName = stock_info['shortName']
-    print (str(stock_info))
+    try:
+        shortName = stock_info['shortName']
+    except:
+        shortName = ''
+ 
     
 
     # Declare plotly figure (go)
@@ -44,9 +56,11 @@ def createChart(ticker):
                     low=df['Low'],
                     close=df['Close'], name = 'market data'))
 
-    fig.update_layout(
-        title= shortName + "(" + ticker + ") " +' Live Share Price: ' +  str(currentTickerPrice))              
-
+    if shortName != '':
+        fig.update_layout(
+            title= shortName + "(" + ticker + ") " +' Live Share Price: ' +  str(currentTickerPrice))              
+    else:
+        fig.update_layout(title = 'INVALID TICKER HAS BEEN ENTERED. PLEASE TRY AGAIN')
     fig.update
 
 
@@ -66,9 +80,6 @@ def createChart(ticker):
 plot_div = createChart('^DJI')
 
 
-def home(request):
-    return render(request, "hello/home.html")
-
 def stock(request):
     
     if request.GET.__contains__('ticker'):
@@ -80,11 +91,47 @@ def stock(request):
             if (x):
                 plot_div = re.sub("\('", "", str(plot_div), 1)
                 plot_div = re.sub("',\)", "", str(plot_div))
-        
-    
-    return render(request, 'hello/stock.html', context={'plot_div': plot_div})
+    if loginBool == True:
+        return render(request, 'hello/stock.html', {'plot_div': plot_div, 'username': globalUsername})
+    else:
+        return render(request, 'hello/stock.html', context={'plot_div': plot_div})
 
-def login(request):
+def user_login(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
     
+        user = authenticate(request, username = username, password = password)
+    
+        if user is not None:
+            login(request, user)
+            global loginBool
+            loginBool = True
+            global globalUsername
+            globalUsername = username
+            return redirect('stock')
+        else:
+            str = "Invalid Username or Password"
+            return render(request, 'hello/login.html', context={'str':str} )
+        
     return render(request, "hello/login.html")
+
+def register(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        pass1 = request.POST.get('password')
+        pass2 = request.POST.get('confirmPassword')
+
+        user = User.objects.create_user(username,email,pass1)
+
+        return redirect('/login')
+
+    return render(request, "hello/register.html")
+
+def user_logout(request):
+    logout(request)
+    return render(request, "hello/logout.html")
 

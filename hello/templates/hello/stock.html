@@ -1,9 +1,8 @@
 {% extends "hello/layout.html" %}
 {% block title %}
-Stock
+QuickTrends
 {% endblock %}
 {% block content %}
-{{ BusinessSummary }}
 {% autoescape off %}
 {{ plot_div }}
 {% endautoescape %}

@@ -11,7 +11,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 sql = "INSERT INTO users (username, password, salt) VALUES (%s, %s, %s)"
-val = ("user1", "ZZZZZ", "salt1")
+val = ("user24", "", "")
 mycursor.execute(sql, val)
 
 mydb.commit()
