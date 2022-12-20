@@ -13,22 +13,28 @@
 
 
 <body style="background-color: #f8f9fa;"> 
+
+
 <nav class="navbar bg-light">
-        <a class = "navbar-brand" href="http://127.0.0.1:8000/">
-            <img src="{% static "hello/quicktrendsSML2.png" %}" alt="LOGO" height=50 width=50 class='d-inline-block'/>QuickTrends
-        </a>
-        <a><form style="display:inline;" action="" method="GET">
+    <div class="container-fluid ">
+    <a class = "navbar-brand" href="http://127.0.0.1:8000/">
+        <img src="{% static "hello/quicktrendsSML2.png" %}" alt="LOGO" height=50 width=50 class='d-inline-block'/>QuickTrends
+    </a>
+    <div class="me-auto">
+        <form style="display:inline;" action="" method="GET">
         <label for="ticker">Ticker: </label>
         <input id="ticker" type="text" placeholder= "Search..." name="ticker">
         <input class="btn btn-primary" type="submit"  value="Submit"> 
-        </a>
-    </form>
+        </form>
+    </div>
     {% if user.is_authenticated %}
-    <p>Hello {{ username }} </p>
-    <a href="/logout" class="btn btn-primary">Log Out</a>
+        <!-- <p>Hello {{ username }} </p> -->
+        <a href="/logout" class="btn btn-primary">Log Out</a>
     {% else %}
-    <a href="/login" class="btn btn-primary">Login</a>
+        <a href="/login" class="btn btn-primary">Login</a>
     {% endif %}
+
+</div>
 </nav>
 
 
