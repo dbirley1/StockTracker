@@ -57,8 +57,12 @@ def createChart(ticker):
                     close=df['Close'], name = 'market data'))
 
     if shortName != '':
-        fig.update_layout(
-            title= shortName + "(" + ticker + ") " +' Live Share Price: ' +  str(currentTickerPrice))              
+            
+            try:
+                fig.update_layout(
+                title= shortName + "(" + ticker + ") " +' Live Share Price: ' +  str(currentTickerPrice))   
+            except:
+                fig.update_layout(title = 'INVALID TICKER HAS BEEN ENTERED. PLEASE TRY AGAIN')        
     else:
         fig.update_layout(title = 'INVALID TICKER HAS BEEN ENTERED. PLEASE TRY AGAIN')
     fig.update
@@ -124,8 +128,15 @@ def register(request):
         email = request.POST.get('email')
         pass1 = request.POST.get('password')
         pass2 = request.POST.get('confirmPassword')
-
-        user = User.objects.create_user(username,email,pass1)
+        if pass1 == pass2:
+            try:
+                user = User.objects.create_user(username,email,pass1)
+            except:
+                str = 'Username or Email is Already in Use'
+                return render(request, "hello/register.html",context={'str':str})
+        else:
+            str = 'Passwords Do Not Match'
+            return render(request, "hello/register.html",context={'str':str})
 
         return redirect('/login')
 
