@@ -37,13 +37,14 @@ def createChart(ticker):
     df = yf.download(tickers=ticker,period='1d',interval='1m')
 
     stock_info = yf.Ticker(ticker).info
-    currentTickerPrice = stock_info['regularMarketPrice']
+    try:
+        currentTickerPrice = stock_info['regularMarketPrice']
+    except:
+        shortName = ''
     try:
         shortName = stock_info['shortName']
     except:
         shortName = ''
- 
-    
 
     # Declare plotly figure (go)
     fig=go.Figure()

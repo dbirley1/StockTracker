@@ -3,7 +3,6 @@ from django.utils.timezone import datetime
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .forms import loginForm
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import re
@@ -19,8 +18,10 @@ import yfinance as yf
 import datetime as dt 
 import plotly.graph_objs as go 
 
+yf.__version__
 
 class Stock:
+
 
 
     def __init__(self, ticker, plot_div=''):
@@ -29,6 +30,7 @@ class Stock:
         
 
         yf.pdr_override()
+
 
         # Retrieve stock data frame (df) from yfinance API at an interval of 1m 
         df = yf.download(tickers=ticker,period='1d',interval='1m')
